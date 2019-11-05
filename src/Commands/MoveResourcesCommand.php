@@ -60,10 +60,12 @@ class MoveResourcesCommand extends Command
 
         $blueprint
             ->each(function ($new, $old) {
-                $this->move($old, $new);
+                file_exists($new)
+                    ? $this->warn("Warning: Skipping ".basename($new)." as it already exists in destination (path: ".$new.")")
+                    : $this->move($old, $new);
             })
             ->tap(function (Collection $files) {
-                $this->info("Successfully moved {$files->count()} files!");
+                $this->info("Done. Processed {$files->count()} files!");
             });
     }
 
@@ -139,6 +141,10 @@ class MoveResourcesCommand extends Command
      */
     protected function move($oldPath, $newPath)
     {
+        if (! file_exists($targetDir = dirname($newPath))) {
+            mkdir($targetDir, 0755, true);
+        }
+
         rename($oldPath, $newPath);
 
         $this->updateNamespace($newPath);
