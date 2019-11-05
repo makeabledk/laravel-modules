@@ -53,6 +53,11 @@ class TestCase extends BaseTestCase
         }
     }
 
+    protected function stub($file = null)
+    {
+        return __DIR__.'/stubs'.($file ? '/'.$file : '');
+    }
+
     /**
      * @param  null  $file
      * @return string

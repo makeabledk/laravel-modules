@@ -5,6 +5,7 @@ namespace Makeable\LaravelModules;
 use Illuminate\Support\ServiceProvider;
 use Makeable\LaravelModules\Commands\CreateServiceCommand;
 use Makeable\LaravelModules\Commands\CreateSiteCommand;
+use Makeable\LaravelModules\Commands\MoveResourcesCommand;
 
 class ModulesServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,7 @@ class ModulesServiceProvider extends ServiceProvider
         $this->commands([
             CreateServiceCommand::class,
             CreateSiteCommand::class,
+            MoveResourcesCommand::class,
         ]);
     }
 }

@@ -48,8 +48,8 @@ class Module
      */
     public function create()
     {
-        if (file_exists($modulePath = $this->getModulePath())) {
-            throw new \BadMethodCallException('Folder already exists in: '.$modulePath);
+        if ($this->exists()) {
+            throw new \BadMethodCallException('Folder already exists in: '.$this->getModulePath());
         }
 
         if (! file_exists($groupPath = $this->getGroupPath())) {
@@ -65,6 +65,22 @@ class Module
         app(ModuleInstaller::class)->install($this);
 
         return $this;
+    }
+
+    /**
+     * @return $this|\Makeable\LaravelModules\Module
+     */
+    public function createIfNotExists()
+    {
+        return $this->exists() ? $this : $this->create();
+    }
+
+    /**
+     * @return bool
+     */
+    public function exists()
+    {
+        return file_exists($this->getModulePath());
     }
 
     // _________________________________________________________________________________________________________________
