@@ -5,14 +5,14 @@ namespace Makeable\LaravelModules\Commands;
 use Illuminate\Console\Command;
 use Makeable\LaravelModules\Module;
 
-class CreateSiteCommand extends Command
+class CreateSiteCommand extends CreateModuleCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'modules:site {name}';
+    protected $signature = 'modules:site {name} {--no-update}';
 
     /**
      * The console command description.
@@ -28,8 +28,6 @@ class CreateSiteCommand extends Command
      */
     public function handle()
     {
-        $module = Module::createSite($this->argument('name'));
-
-        $this->info("Created {$module->getPackageName()} module. Happy coding!");
+        $this->create(Module::make('sites', $this->argument('name')));
     }
 }

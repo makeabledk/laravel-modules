@@ -14,6 +14,11 @@ class Module
     protected $groupName, $name;
 
     /**
+     * @var bool
+     */
+    public $wasRecentlyCreated = false;
+
+    /**
      * @param  string  $groupName
      * @param  string  $name
      */
@@ -26,21 +31,13 @@ class Module
     }
 
     /**
+     * @param $groupName
      * @param $name
      * @return static
      */
-    public static function createService($name)
+    public static function make($groupName, $name)
     {
-        return (new static('services', $name))->create();
-    }
-
-    /**
-     * @param $name
-     * @return static
-     */
-    public static function createSite($name)
-    {
-        return (new static('sites', $name))->create();
+        return new static($groupName, $name);
     }
 
     /**
@@ -63,6 +60,8 @@ class Module
         $this->initProvider();
 
         app(ModuleInstaller::class)->install($this);
+
+        $this->wasRecentlyCreated = true;
 
         return $this;
     }

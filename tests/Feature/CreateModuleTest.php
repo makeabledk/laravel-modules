@@ -13,36 +13,69 @@ class CreateModuleTest extends TestCase
     public function it_can_create_a_module_through_module_class()
     {
         $installer = ModuleInstaller::fake();
-        $site = Module::createSite('api');
+        $module = Module::make('sites', 'api');
 
-        $this->assertFileExists($site->getModulePath('composer.json'));
-        $this->assertFileExists($site->getModulePath('app/ApiServiceProvider.php'));
-        $this->assertTrue($installer->wasInstalled);
+        $this->assertFalse($module->exists());
+
+        $module->create();
+
+        $this->assertFileExists($module->getModulePath('composer.json'));
+        $this->assertFileExists($module->getModulePath('app/ApiServiceProvider.php'));
+        $this->assertTrue($module->exists());
+        $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
+    }
+
+    /** @test * */
+    public function it_can_create_a_module_through_the_artisan_command()
+    {
+        $installer = ModuleInstaller::fake();
+        $module = Module::make('modules', 'api');
+
+        Artisan::call('modules:make modules/api --no-update');
+
+        $this->assertFileExists($module->getModulePath('composer.json'));
+        $this->assertFileExists($module->getModulePath('app/ApiServiceProvider.php'));
+        $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
+        $this->assertFalse($installer->updatedComposer);
     }
 
     /** @test * */
     public function it_can_create_a_site_through_the_artisan_command()
     {
         $installer = ModuleInstaller::fake();
-        $site = new Module('sites', 'api'); // just for path reference
+        $module = Module::make('sites', 'api');
 
-        Artisan::call('modules:site api');
+        Artisan::call('modules:site api --no-update');
 
-        $this->assertFileExists($site->getModulePath('composer.json'));
-        $this->assertFileExists($site->getModulePath('app/ApiServiceProvider.php'));
-        $this->assertTrue($installer->wasInstalled);
+        $this->assertFileExists($module->getModulePath('composer.json'));
+        $this->assertFileExists($module->getModulePath('app/ApiServiceProvider.php'));
+        $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
+        $this->assertFalse($installer->updatedComposer);
     }
 
     /** @test * */
     public function it_can_create_a_service_through_the_artisan_command()
     {
         $installer = ModuleInstaller::fake();
-        $site = new Module('services', 'users'); // just for path reference
+        $module = Module::make('services', 'users');
 
-        Artisan::call('modules:service users');
+        Artisan::call('modules:service users --no-update');
 
-        $this->assertFileExists($site->getModulePath('composer.json'));
-        $this->assertFileExists($site->getModulePath('app/UsersServiceProvider.php'));
-        $this->assertTrue($installer->wasInstalled);
+        $this->assertFileExists($module->getModulePath('composer.json'));
+        $this->assertFileExists($module->getModulePath('app/UsersServiceProvider.php'));
+        $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
+        $this->assertFalse($installer->updatedComposer);
+    }
+
+    /** @test * */
+    public function it_suggests_to_update_composer_after_running_artisan_command()
+    {
+        $installer = ModuleInstaller::fake();
+
+        $this
+            ->artisan('modules:make modules/api')
+            ->expectsQuestion('Would you like to run composer update?', 'yes');
+
+        $this->assertTrue($installer->updatedComposer);
     }
 }

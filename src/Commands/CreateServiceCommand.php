@@ -5,14 +5,14 @@ namespace Makeable\LaravelModules\Commands;
 use Illuminate\Console\Command;
 use Makeable\LaravelModules\Module;
 
-class CreateServiceCommand extends Command
+class CreateServiceCommand extends CreateModuleCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'modules:service {name}';
+    protected $signature = 'modules:service {name} {--no-update}';
 
     /**
      * The console command description.
@@ -28,8 +28,6 @@ class CreateServiceCommand extends Command
      */
     public function handle()
     {
-        $module = Module::createService($this->argument('name'));
-
-        $this->info("Created {$module->getPackageName()} module. Happy coding!");
+        $this->create(Module::make('services', $this->argument('name')));
     }
 }

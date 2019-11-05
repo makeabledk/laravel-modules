@@ -10,7 +10,7 @@ class FakeModuleInstaller extends ModuleInstaller
     /**
      * @var bool
      */
-    public $wasInstalled = false;
+    public $updatedComposer = false;
 
     public function __construct()
     {
@@ -22,10 +22,9 @@ class FakeModuleInstaller extends ModuleInstaller
     }
 
     /**
-     * @param  \Makeable\LaravelModules\Module  $module
      */
-    protected function requirePackage(Module $module)
+    public function updateComposer()
     {
-        $this->wasInstalled = true;
+        $this->updatedComposer = true;
     }
 }

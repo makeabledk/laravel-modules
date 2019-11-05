@@ -23,9 +23,9 @@ class MoveResourcesTest extends TestCase
     /** @test * */
     public function it_can_move_files_to_a_new_module()
     {
-        ModuleInstaller::fake();
+        $installer = ModuleInstaller::fake();
 
-        $this->prepareApp()->artisan('modules:move User --service users --force --app-path='.$this->tmp('app'));
+        $this->prepareApp()->artisan('modules:move User --service users --force --no-update --app-path='.$this->tmp('app'));
 
         $this->assertFileExists($this->tmp('app/Jobs/ProcessPodcastJob.php'));
         $this->assertFileExists($model = $this->tmp('services/users/app/User.php'));
@@ -34,16 +34,31 @@ class MoveResourcesTest extends TestCase
 
         $this->assertNamespace($model, "Services\\Users");
         $this->assertNamespace($controller, "Services\\Users\\Http\\Controllers");
+
+        $this->assertFalse($installer->updatedComposer);
     }
 
     /** @test * */
     public function it_can_move_files_to_existing_modules()
     {
         ModuleInstaller::fake();
-        Module::createService('users');
+        Module::make('services', 'users')->create();
 
         $this->prepareApp()->artisan('modules:move User --service users --force --app-path='.$this->tmp('app'));
         $this->assertFileExists($this->tmp('services/users/app/User.php'));
+    }
+
+    /** @test * */
+    public function it_suggests_to_update_composer_after_module_was_created()
+    {
+        $installer = ModuleInstaller::fake();
+
+        $this
+            ->prepareApp()
+            ->artisan('modules:move User --service users --force --app-path='.$this->tmp('app'))
+            ->expectsQuestion('Would you like to run composer update?', 'yes');
+
+        $this->assertTrue($installer->updatedComposer);
     }
 
     /**

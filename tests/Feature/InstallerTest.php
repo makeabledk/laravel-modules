@@ -13,12 +13,20 @@ class InstallerTest extends TestCase
     public function it_does_not_change_the_formatting()
     {
         $installer = ModuleInstaller::fake();
-
         $originalContents = file_get_contents($installer->path());
-
         $installer->write($installer->read());
 
         $this->assertEquals($originalContents, file_get_contents($installer->path()));
+    }
+
+    /** @test * */
+    public function it_can_write_to_a_specific_key()
+    {
+        $installer = ModuleInstaller::fake();
+        $properties = count($installer->read());
+        $installer->write('foo', 'bar');
+
+        $this->assertEquals($properties + 1, count($installer->read()));
     }
 
     /** @test * */

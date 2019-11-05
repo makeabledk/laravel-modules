@@ -47,34 +47,11 @@ class ModuleInstaller
     }
 
     /**
-     * @param  \Makeable\LaravelModules\Module  $module
+     * Run composer update command
      */
-    protected function addRepository(Module $module)
+    public function updateComposer()
     {
-        $contents = $this->read();
-        $repositories = Arr::get($contents, 'repositories', []);
-        $repository = [
-            'type' => 'path',
-            'url' => './' . $module->getPackageName()
-        ];
-
-        $contents['repositories'] = Arr::isAssoc($repositories)
-            ? array_merge($repositories, [$module->getPackageName() => $repository])
-            : value(function () use ($repositories, $repository) {
-                array_push($repositories, $repository);
-
-                return array_values(Arr::sort($repositories, 'url'));
-            });
-
-        $this->write($contents);
-    }
-
-    /**
-     * @param  \Makeable\LaravelModules\Module  $module
-     */
-    protected function requirePackage(Module $module)
-    {
-        shell_exec("composer require {$module->getPackageName()}:'*@dev'");
+        shell_exec("composer update");
     }
 
     /**
@@ -86,6 +63,7 @@ class ModuleInstaller
     }
 
     /**
+     * @param  null  $key
      * @return array
      */
     public function read($key = null)
@@ -99,10 +77,54 @@ class ModuleInstaller
      * Write object to composer.json.
      * Append empty line as per PSR spec.
      *
+     * @param $key
      * @param  array  $contents
      */
-    public function write($contents)
+    public function write($key, $contents = null)
     {
+        if ($contents === null) {
+            $contents = $key;
+            $key = null;
+        }
+
+        if ($key !== null) {
+            [$partial, $contents] = [$contents, $this->read()];
+
+            data_set($contents, $key, $partial);
+        }
+
         file_put_contents($this->path(), json_encode($contents, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES) . "\n");
+    }
+
+    /**
+     * @param  \Makeable\LaravelModules\Module  $module
+     */
+    protected function addRepository(Module $module)
+    {
+        $repositories = $this->read('repositories') ?: [];
+        $repository = [
+            'type' => 'path',
+            'url' => './' . $module->getPackageName()
+        ];
+
+        $this->write('repositories',
+            Arr::isAssoc($repositories)
+                ? array_merge($repositories, [$module->getPackageName() => $repository])
+                : value(function () use ($repositories, $repository) {
+                array_push($repositories, $repository);
+
+                return array_values(Arr::sort($repositories, 'url'));
+            })
+        );
+    }
+
+    /**
+     * @param  \Makeable\LaravelModules\Module  $module
+     */
+    protected function requirePackage(Module $module)
+    {
+        $this->write('require', array_merge($this->read('require'), [
+            $module->getPackageName() => '*@dev'
+        ]));
     }
 }

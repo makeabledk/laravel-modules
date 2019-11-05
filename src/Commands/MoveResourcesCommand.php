@@ -12,12 +12,14 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class MoveResourcesCommand extends Command
 {
+    use SuggestsComposerUpdate;
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'modules:move {resources*} {--site=} {--service=} {--app-path=} {--force}';
+    protected $signature = 'modules:move {resources*} {--site=} {--service=} {--app-path=} {--force} {--no-update}';
 
     /**
      * The console command description.
@@ -38,35 +40,46 @@ class MoveResourcesCommand extends Command
      */
     public function handle()
     {
-        $files = collect($this->discoverFiles());
-        $blueprint = $files->mapWithKeys(function (SplFileInfo $file) {
+        $files = collect($this->discoverFiles())->mapWithKeys(function (SplFileInfo $file) {
             return [$file->getRealPath() => $this->getNewPath($file)];
         });
 
-        $this->comment('The following files will be moved:');
+        if ($this->confirmChanges($files)) {
+            $this->module()->createIfNotExists();
 
-        $this->table(['Source', 'Destination'], $blueprint->map(function ($new, $old) {
-            return [$old, $new];
-        }));
-
-        if (! $this->option('force')) {
-            if (! $this->confirm('Do you wish to continue?')) {
-                $this->error('Aborted');
-                exit;
-            }
-        }
-
-        $this->module()->createIfNotExists();
-
-        $blueprint
-            ->each(function ($new, $old) {
+            $files->each(function ($new, $old) {
                 file_exists($new)
                     ? $this->warn("Warning: Skipping ".basename($new)." as it already exists in destination (path: ".$new.")")
                     : $this->move($old, $new);
-            })
-            ->tap(function (Collection $files) {
-                $this->info("Done. Processed {$files->count()} files!");
             });
+
+            $this->info("Done. Processed {$files->count()} files!");
+
+            if ($this->module()->wasRecentlyCreated) {
+                $this->suggestComposerUpdate();
+            }
+
+            return;
+        }
+
+        $this->error('Aborted');
+    }
+
+    /**
+     * @param  \Illuminate\Support\Collection  $files
+     * @return bool
+     */
+    protected function confirmChanges(Collection $files)
+    {
+        $this->comment('The following files will be moved:');
+
+        $this->table(['Source', 'Destination'], $files->map(function ($new, $old) {
+            return [$old, $new];
+        }));
+
+        return $this->option('force')
+            ? true
+            : $this->confirm('Do you wish to continue?');
     }
 
     /**
