@@ -53,16 +53,18 @@ class ModuleInstaller
     {
         $contents = $this->read();
         $repositories = Arr::get($contents, 'repositories', []);
-
         $repository = [
             'type' => 'path',
             'url' => './' . $module->getPackageName()
         ];
 
-        $contents['repositories'] = array_merge($repositories, Arr::isAssoc($repositories)
-            ? [$module->getPackageName() => $repository]
-            : [$repository]
-        );
+        $contents['repositories'] = Arr::isAssoc($repositories)
+            ? array_merge($repositories, [$module->getPackageName() => $repository])
+            : value(function () use ($repositories, $repository) {
+                array_push($repositories, $repository);
+
+                return array_values(Arr::sort($repositories, 'url'));
+            });
 
         $this->write($contents);
     }
@@ -86,9 +88,11 @@ class ModuleInstaller
     /**
      * @return array
      */
-    public function read()
+    public function read($key = null)
     {
-        return json_decode(file_get_contents($this->path()), true);
+        $contents = json_decode(file_get_contents($this->path()), true);
+
+        return $key ? data_get($contents, $key) : $contents;
     }
 
     /**

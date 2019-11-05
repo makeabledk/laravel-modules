@@ -25,9 +25,8 @@ class InstallerTest extends TestCase
     public function it_adds_a_repositories_config()
     {
         $installer = ModuleInstaller::fake()->install(new Module('sites', 'web'));
-        $config = $installer->read();
 
-        $this->assertEquals($config['repositories'], [
+        $this->assertEquals($installer->read('repositories'), [
             [
                 'type' => 'path',
                 'url' => './sites/web'
@@ -47,20 +46,21 @@ class InstallerTest extends TestCase
                 ]
             ]
         ]));
+        $installer->install(new Module('sites', 'api'));
 
-        $this->assertEquals(
-            Arr::get($installer->install(new Module('sites', 'api'))->read(), 'repositories'),
-            [
-                [
-                    'type' => 'path',
-                    'url' => './sites/web'
-                ],
-                [
-                    'type' => 'path',
-                    'url' => './sites/api'
-                ],
-            ]
-        );
+        $this->assertEquals(2, count($installer->read('repositories')));
+    }
+
+    /** @test * */
+    public function it_sorts_repositories_alphabetically()
+    {
+        $installer = ModuleInstaller::fake();
+
+        $installer->install(new Module('sites', 'web'));
+        $installer->install(new Module('sites', 'api'));
+
+        $this->assertEquals('./sites/api', $installer->read('repositories.0.url'));
+        $this->assertEquals('./sites/web', $installer->read('repositories.1.url'));
     }
 
     /** @test * */
