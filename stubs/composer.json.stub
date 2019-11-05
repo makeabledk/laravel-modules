@@ -1,0 +1,16 @@
+{
+    "name": "%package_name%",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "%namespace%": "./app"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "%namespace%%provider_name%"
+            ]
+        }
+    }
+}
