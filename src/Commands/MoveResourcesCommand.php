@@ -48,7 +48,7 @@ class MoveResourcesCommand extends Command
 
             $files->each(function ($new, $old) {
                 file_exists($new)
-                    ? $this->warn("Warning: Skipping ".basename($new)." as it already exists in destination (path: ".$new.")")
+                    ? $this->warn('Warning: Skipping '.basename($new).' as it already exists in destination (path: '.$new.')')
                     : $this->move($old, $new);
             });
 

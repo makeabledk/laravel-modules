@@ -37,8 +37,8 @@ class InstallerTest extends TestCase
         $this->assertEquals($installer->read('repositories'), [
             [
                 'type' => 'path',
-                'url' => './sites/web'
-            ]
+                'url' => './sites/web',
+            ],
         ]);
     }
 
@@ -50,9 +50,9 @@ class InstallerTest extends TestCase
             'repositories' => [
                 [
                     'type' => 'path',
-                    'url' => './sites/web'
-                ]
-            ]
+                    'url' => './sites/web',
+                ],
+            ],
         ]));
         $installer->install(new Module('sites', 'api'));
 
@@ -79,9 +79,9 @@ class InstallerTest extends TestCase
             'repositories' => [
                 'sites/web' => [
                     'type' => 'path',
-                    'url' => './sites/web'
-                ]
-            ]
+                    'url' => './sites/web',
+                ],
+            ],
         ]));
 
         $this->assertEquals(
@@ -89,11 +89,11 @@ class InstallerTest extends TestCase
             [
                 'sites/web' => [
                     'type' => 'path',
-                    'url' => './sites/web'
+                    'url' => './sites/web',
                 ],
                 'sites/api' => [
                     'type' => 'path',
-                    'url' => './sites/api'
+                    'url' => './sites/api',
                 ],
             ]
         );

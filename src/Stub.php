@@ -40,7 +40,7 @@ class Stub
     }
 
     /**
-     * Create package folder
+     * Create package folder.
      *
      * @return $this
      */
@@ -57,7 +57,7 @@ class Stub
     }
 
     /**
-     * Publish composer.json
+     * Publish composer.json.
      *
      * @return $this
      */
@@ -75,7 +75,7 @@ class Stub
     }
 
     /**
-     * Publish provider
+     * Publish provider.
      *
      * @return $this
      */
@@ -85,7 +85,7 @@ class Stub
             'namespace' => $this->module->getNamespace(),
             'provider_name' => $this->module->getProviderName(),
             'snippet_load_views' => trim($this->module->assets ? $this->stub('snippet_load_views', [
-                'views_namespace' => $this->module->name
+                'views_namespace' => $this->module->name,
             ]) : ''),
             'snippet_load_routes' => trim($this->module->routes ? $this->stub('snippet_load_routes') : ''),
             'snippet_load_routes_helper' => trim($this->module->routes ? $this->stub('snippet_load_routes_helper', [
@@ -100,20 +100,17 @@ class Stub
     }
 
     /**
-     * Publish routes file
+     * Publish routes file.
      */
     public function routes()
     {
         $this->folder(dirname($routesFile = $this->module->getModulePath("routes/{$this->module->name}.php")));
 
         $this->write($routesFile, $this->stub('routes.php', [
-            'middleware_name' => $this->module->name
+            'middleware_name' => $this->module->name,
         ]));
     }
 
-    /**
-     *
-     */
     public function assets()
     {
         $this->folder($this->module->getModulePath('resources'));
@@ -140,7 +137,7 @@ class Stub
      */
     protected function stub($name, $data = [])
     {
-        $template = file_get_contents(__DIR__ . "/../stubs/{$name}.stub");
+        $template = file_get_contents(__DIR__."/../stubs/{$name}.stub");
 
         foreach ($data as $key => $value) {
             $template = str_replace("%{$key}%", $value, $template);

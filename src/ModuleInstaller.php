@@ -21,7 +21,7 @@ class ModuleInstaller
     }
 
     /**
-     * Fake the installer
+     * Fake the installer.
      *
      * @return FakeModuleInstaller
      */
@@ -33,7 +33,7 @@ class ModuleInstaller
     }
 
     /**
-     * Install the module in root project
+     * Install the module in root project.
      *
      * @param  \Makeable\LaravelModules\Module  $module
      * @return \Makeable\LaravelModules\ModuleInstaller
@@ -47,11 +47,11 @@ class ModuleInstaller
     }
 
     /**
-     * Run composer update command
+     * Run composer update command.
      */
     public function updateComposer()
     {
-        shell_exec("composer update");
+        shell_exec('composer update');
     }
 
     /**
@@ -93,7 +93,7 @@ class ModuleInstaller
             data_set($contents, $key, $partial);
         }
 
-        file_put_contents($this->path(), json_encode($contents, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES) . "\n");
+        file_put_contents($this->path(), json_encode($contents, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES)."\n");
     }
 
     /**
@@ -104,7 +104,7 @@ class ModuleInstaller
         $repositories = $this->read('repositories') ?: [];
         $repository = [
             'type' => 'path',
-            'url' => './' . $module->getPackageName()
+            'url' => './'.$module->getPackageName(),
         ];
 
         $this->write(
@@ -125,7 +125,7 @@ class ModuleInstaller
     protected function requirePackage(Module $module)
     {
         $this->write('require', array_merge($this->read('require'), [
-            $module->getPackageName() => '*@dev'
+            $module->getPackageName() => '*@dev',
         ]));
     }
 }

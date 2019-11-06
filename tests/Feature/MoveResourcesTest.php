@@ -30,8 +30,8 @@ class MoveResourcesTest extends TestCase
         $this->assertFileExists($controller = $this->tmp('services/users/app/Http/Controllers/UserController.php'));
         $this->assertFileNotExists($this->tmp('services/users/app/Jobs/ProcessPodcastJob.php'));
 
-        $this->assertNamespace($model, "Services\\Users");
-        $this->assertNamespace($controller, "Services\\Users\\Http\\Controllers");
+        $this->assertNamespace($model, 'Services\\Users');
+        $this->assertNamespace($controller, 'Services\\Users\\Http\\Controllers');
 
         $this->assertFalse($installer->updatedComposer);
     }
