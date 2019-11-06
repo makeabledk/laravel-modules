@@ -15,12 +15,15 @@ class Module
     /**
      * @var string
      */
-    public $groupName, $name;
+    public $groupName;
+    public $name;
 
     /**
      * @var bool
      */
-    public $wasRecentlyCreated = false, $routes = false, $assets = false;
+    public $wasRecentlyCreated = false;
+    public $routes = false;
+    public $assets = false;
 
     /**
      * @param  string  $groupName
@@ -107,7 +110,7 @@ class Module
      */
     public function getNamespace($class = null)
     {
-        return Str::studly($this->groupName)."\\".Str::studly($this->name).($class !== null ? "\\".$class : "");
+        return Str::studly($this->groupName).'\\'.Str::studly($this->name).($class !== null ? '\\'.$class : '');
     }
 
     /**

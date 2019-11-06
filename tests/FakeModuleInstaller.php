@@ -20,7 +20,6 @@ class FakeModuleInstaller extends ModuleInstaller
         parent::__construct($composerPath);
     }
 
-
     public function updateComposer()
     {
         $this->updatedComposer = true;
