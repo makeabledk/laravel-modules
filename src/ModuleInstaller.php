@@ -107,14 +107,15 @@ class ModuleInstaller
             'url' => './' . $module->getPackageName()
         ];
 
-        $this->write('repositories',
+        $this->write(
+            'repositories',
             Arr::isAssoc($repositories)
                 ? array_merge($repositories, [$module->getPackageName() => $repository])
                 : value(function () use ($repositories, $repository) {
-                array_push($repositories, $repository);
+                    array_push($repositories, $repository);
 
-                return array_values(Arr::sort($repositories, 'url'));
-            })
+                    return array_values(Arr::sort($repositories, 'url'));
+                })
         );
     }
 

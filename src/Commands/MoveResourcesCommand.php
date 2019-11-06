@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Makeable\LaravelModules\Module;
-use PhpParser\Node\Expr\AssignOp\Mod;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 

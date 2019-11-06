@@ -2,6 +2,7 @@
 
 namespace %namespace%;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class %provider_name% extends ServiceProvider
@@ -24,5 +25,10 @@ class %provider_name% extends ServiceProvider
     public function boot()
     {
         //
+
+        %snippet_load_views%
+        %snippet_load_routes%
     }
+
+    %snippet_load_routes_helper%
 }

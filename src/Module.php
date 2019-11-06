@@ -2,21 +2,25 @@
 
 namespace Makeable\LaravelModules;
 
+use Facades\Makeable\LaravelModules\ModuleInstaller;
 use Illuminate\Support\Str;
 
 class Module
 {
+    /**
+     * @var string|null
+     */
     public static $basePath;
 
     /**
      * @var string
      */
-    protected $groupName, $name;
+    public $groupName, $name;
 
     /**
      * @var bool
      */
-    public $wasRecentlyCreated = false;
+    public $wasRecentlyCreated = false, $routes = false, $assets = false;
 
     /**
      * @param  string  $groupName
@@ -49,17 +53,8 @@ class Module
             throw new \BadMethodCallException('Folder already exists in: '.$this->getModulePath());
         }
 
-        if (! file_exists($groupPath = $this->getGroupPath())) {
-            mkdir($groupPath, 0755);
-        }
-
-        mkdir($this->getModulePath(), 0755);
-        mkdir($this->getModuleAppPath(), 0755);
-
-        $this->initComposer();
-        $this->initProvider();
-
-        app(ModuleInstaller::class)->install($this);
+        Stub::create($this);
+        ModuleInstaller::install($this);
 
         $this->wasRecentlyCreated = true;
 
@@ -80,6 +75,28 @@ class Module
     public function exists()
     {
         return file_exists($this->getModulePath());
+    }
+
+    /**
+     * @param  bool  $include
+     * @return $this
+     */
+    public function assets($include = true)
+    {
+        $this->assets = $include;
+
+        return $this;
+    }
+
+    /**
+     * @param  bool  $include
+     * @return $this
+     */
+    public function routes($include = true)
+    {
+        $this->routes = $include;
+
+        return $this;
     }
 
     // _________________________________________________________________________________________________________________
@@ -136,54 +153,54 @@ class Module
     }
 
     // _________________________________________________________________________________________________________________
-
-    /**
-     * @return void
-     */
-    protected function initComposer()
-    {
-        $template = $this->fill(static::stub('composer.json'), [
-            'namespace' => addslashes($this->getNamespace('')),
-            'package_name' => $this->getPackageName(),
-            'provider_name' => $this->getProviderName(),
-        ]);
-
-        file_put_contents($this->getModulePath('composer.json'), $template);
-    }
-
-    /**
-     * @return void
-     */
-    protected function initProvider()
-    {
-        $template = $this->fill(static::stub('ServiceProvider.php'), [
-            'namespace' => $this->getNamespace(),
-            'provider_name' => $this->getProviderName(),
-        ]);
-
-        file_put_contents($this->getModuleAppPath("{$this->getProviderName()}.php"), $template);
-    }
-
-    /**
-     * @param $template
-     * @param $data
-     * @return mixed
-     */
-    protected function fill($template, $data)
-    {
-        foreach ($data as $key => $value) {
-            $template = str_replace("%{$key}%", $value, $template);
-        }
-
-        return $template;
-    }
-
-    /**
-     * @param $name
-     * @return false|string
-     */
-    protected static function stub($name)
-    {
-        return file_get_contents(__DIR__ . "/../stubs/{$name}.stub");
-    }
+//
+//    /**
+//     * @return void
+//     */
+//    protected function initComposer()
+//    {
+//        $template = $this->fill(static::stub('composer.json'), [
+//            'namespace' => addslashes($this->getNamespace('')),
+//            'package_name' => $this->getPackageName(),
+//            'provider_name' => $this->getProviderName(),
+//        ]);
+//
+//        file_put_contents($this->getModulePath('composer.json'), $template);
+//    }
+//
+//    /**
+//     * @return void
+//     */
+//    protected function initProvider()
+//    {
+//        $template = $this->fill(static::stub('ServiceProvider.php'), [
+//            'namespace' => $this->getNamespace(),
+//            'provider_name' => $this->getProviderName(),
+//        ]);
+//
+//        file_put_contents($this->getModuleAppPath("{$this->getProviderName()}.php"), $template);
+//    }
+//
+//    /**
+//     * @param $template
+//     * @param $data
+//     * @return mixed
+//     */
+//    protected function fill($template, $data)
+//    {
+//        foreach ($data as $key => $value) {
+//            $template = str_replace("%{$key}%", $value, $template);
+//        }
+//
+//        return $template;
+//    }
+//
+//    /**
+//     * @param $name
+//     * @return false|string
+//     */
+//    protected static function stub($name)
+//    {
+//        return file_get_contents(__DIR__ . "/../stubs/{$name}.stub");
+//    }
 }

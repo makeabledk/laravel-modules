@@ -14,7 +14,7 @@ class CreateModuleCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'modules:make {name} {--no-update}';
+    protected $signature = 'modules:make {name} {--assets} {--routes} {--no-update}';
 
     /**
      * The console command description.
@@ -34,7 +34,11 @@ class CreateModuleCommand extends Command
 
         abort_unless(400, count($parts) === 2, 'Invalid module name. Please type a name in the format "{type}/{name}".');
 
-        $this->create(Module::make(...$parts));
+        $this->create(
+            Module::make(...$parts)
+                ->assets($this->option('assets'))
+                ->routes($this->option('routes'))
+        );
     }
 
     /**

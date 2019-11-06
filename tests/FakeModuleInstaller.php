@@ -2,7 +2,6 @@
 
 namespace Makeable\LaravelModules\Tests;
 
-use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModuleInstaller;
 
 class FakeModuleInstaller extends ModuleInstaller
@@ -21,8 +20,7 @@ class FakeModuleInstaller extends ModuleInstaller
         parent::__construct($composerPath);
     }
 
-    /**
-     */
+
     public function updateComposer()
     {
         $this->updatedComposer = true;

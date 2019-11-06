@@ -43,14 +43,30 @@ class CreateModuleTest extends TestCase
     public function it_can_create_a_site_through_the_artisan_command()
     {
         $installer = ModuleInstaller::fake();
+        $module = Module::make('sites', 'web');
+
+        Artisan::call('modules:site web --no-update');
+
+        $this->assertFileExists($module->getModulePath('composer.json'));
+        $this->assertFileExists($module->getModulePath('app/WebServiceProvider.php'));
+        $this->assertFileExists($module->getModulePath('routes/web.php'));
+        $this->assertFileExists($module->getModulePath('resources/css/web.css'));
+        $this->assertFileExists($module->getModulePath('resources/js/web.js'));
+        $this->assertFileExists($module->getModulePath('resources/views'));
+        $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
+        $this->assertFalse($installer->updatedComposer);
+    }
+
+    /** @test * */
+    public function it_does_not_create_assets_when_making_a_site_called_api()
+    {
+        ModuleInstaller::fake();
         $module = Module::make('sites', 'api');
 
         Artisan::call('modules:site api --no-update');
 
-        $this->assertFileExists($module->getModulePath('composer.json'));
         $this->assertFileExists($module->getModulePath('app/ApiServiceProvider.php'));
-        $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
-        $this->assertFalse($installer->updatedComposer);
+        $this->assertFileNotExists($module->getModulePath('resources'));
     }
 
     /** @test * */

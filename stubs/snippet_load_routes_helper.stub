@@ -1,0 +1,21 @@
+    /**
+     * Load the module routes.
+     *
+     * @return void
+     */
+    protected function loadRoutes()
+    {
+        if ($this->app->routesAreCached()) {
+            $this->app->booted(function () {
+                require $this->app->getCachedRoutesPath();
+            });
+            return;
+        }
+
+        Route::namespace('%controller_namespace%')->group(__DIR__.'/../routes/%routes_filename%');
+
+        $this->app->booted(function () {
+            $this->app['router']->getRoutes()->refreshNameLookups();
+            $this->app['router']->getRoutes()->refreshActionLookups();
+        });
+    }

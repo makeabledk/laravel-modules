@@ -2,7 +2,6 @@
 
 namespace Makeable\LaravelModules\Tests\Feature;
 
-use Illuminate\Support\Facades\Artisan;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModuleInstaller;
 use Makeable\LaravelModules\Tests\TestCase;
@@ -10,7 +9,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MoveResourcesTest extends TestCase
 {
-
     /** @test * */
     public function it_requires_a_given_module()
     {

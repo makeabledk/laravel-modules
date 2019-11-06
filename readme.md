@@ -15,7 +15,7 @@ This package is still under active development and is not considered ready for u
 You can install this package via composer:
 
 ``` bash
-composer require makeabledk/laravel-modules
+composer require --dev makeabledk/laravel-modules
 ```
 
 ## Testing

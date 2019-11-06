@@ -1,0 +1,13 @@
+<?php
+
+Route::group([
+    'middleware' => ['%middleware_name%'],
+], function () {
+    //
+});
+
+Route::group([
+    'middleware' => ['%middleware_name%', 'auth'],
+], function () {
+    //
+});

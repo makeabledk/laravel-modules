@@ -5,19 +5,12 @@ namespace Makeable\LaravelModules\Tests;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
-use Makeable\LaravelFactory\Factory;
-use Makeable\LaravelFactory\FactoryServiceProvider;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModulesServiceProvider;
 
 class TestCase extends BaseTestCase
 {
-//    use RefreshDatabase;
-
     /**
      * Creates the application.
      *
