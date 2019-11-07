@@ -16,13 +16,25 @@ class Module
      * @var string
      */
     public $groupName;
+
+    /**
+     * @var string
+     */
     public $name;
 
     /**
      * @var bool
      */
     public $wasRecentlyCreated = false;
+
+    /**
+     * @var bool
+     */
     public $routes = false;
+
+    /**
+     * @var bool
+     */
     public $assets = false;
 
     /**
@@ -45,6 +57,26 @@ class Module
     public static function make($groupName, $name)
     {
         return new static($groupName, $name);
+    }
+
+    /**
+     * @param $name
+     * @return static
+     */
+    public static function service($name)
+    {
+        return static::make('services', $name);
+    }
+
+    /**
+     * @param $name
+     * @return static
+     */
+    public static function site($name)
+    {
+        return static::make('sites', $name)
+            ->routes()
+            ->assets($name!== 'api'); // We'll assume site called 'api' won't be needing assets
     }
 
     /**

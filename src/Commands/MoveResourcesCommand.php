@@ -137,11 +137,11 @@ class MoveResourcesCommand extends Command
         }
 
         if ($this->option('site')) {
-            return $this->module = new Module('sites', $this->option('site'));
+            return $this->module = Module::site($this->option('site'));
         }
 
         if ($this->option('service')) {
-            return $this->module = new Module('services', $this->option('service'));
+            return $this->module = Module::service($this->option('service'));
         }
 
         abort(400, 'Please specify which module to move the resources, using either --site or --service option.');

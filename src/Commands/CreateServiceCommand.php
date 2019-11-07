@@ -28,6 +28,6 @@ class CreateServiceCommand extends CreateModuleCommand
      */
     public function handle()
     {
-        $this->create(Module::make('services', $this->argument('name')));
+        $this->create(Module::service($this->argument('name')));
     }
 }

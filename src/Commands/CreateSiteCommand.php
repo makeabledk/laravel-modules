@@ -28,10 +28,6 @@ class CreateSiteCommand extends CreateModuleCommand
      */
     public function handle()
     {
-        $this->create(
-            Module::make('sites', $this->argument('name'))
-                ->routes()
-                ->assets($this->argument('name') !== 'api') // We'll assume api's don't have assets
-        );
+        $this->create(Module::site($this->argument('name')));
     }
 }
