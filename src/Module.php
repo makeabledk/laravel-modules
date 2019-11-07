@@ -76,7 +76,7 @@ class Module
     {
         return static::make('sites', $name)
             ->routes()
-            ->assets($name!== 'api'); // We'll assume site called 'api' won't be needing assets
+            ->assets($name !== 'api'); // We'll assume site called 'api' won't be needing assets
     }
 
     /**
