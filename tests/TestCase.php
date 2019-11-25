@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModulesServiceProvider;
+use Makeable\LaravelModules\Stub;
 
 class TestCase extends BaseTestCase
 {
@@ -27,6 +28,7 @@ class TestCase extends BaseTestCase
         $app->register(ModulesServiceProvider::class);
 
         Module::$basePath = $this->tmp();
+        Stub::$binPath = __DIR__.'/../vendor/bin';
 
         return $app;
     }
