@@ -5,7 +5,7 @@ namespace Makeable\LaravelModules;
 class Stub
 {
     /**
-     * Path to vendor/bin folder
+     * Path to vendor/bin folder.
      *
      * @var string
      */
