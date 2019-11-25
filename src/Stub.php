@@ -165,7 +165,7 @@ class Stub
 
         if ($lint) {
             // Asynchronously run linting: https://stackoverflow.com/questions/222414/asynchronous-shell-exec-in-php
-            shell_exec((static::$binPath ?: base_path('vendor/bin')).'/php-cs-fixer fix '.$path.' &> /dev/null &');
+            shell_exec((static::$binPath ?: base_path('vendor/bin')).'/php-cs-fixer fix '.$path.' --config '.__DIR__.'/../.php_cs.dist &> /dev/null &');
         }
     }
 }
