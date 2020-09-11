@@ -67,6 +67,7 @@ class CreateModuleTest extends TestCase
 
         $this->assertFileExists($module->getModulePath('app/ApiServiceProvider.php'));
         $this->assertFileNotExists($module->getModulePath('resources'));
+//        $this->assertFileDoesNotExist($module->getModulePath('resources')); // PhpUnit 10
     }
 
     /** @test * */
