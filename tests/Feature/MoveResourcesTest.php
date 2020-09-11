@@ -29,6 +29,7 @@ class MoveResourcesTest extends TestCase
         $this->assertFileExists($model = $this->tmp('services/users/app/User.php'));
         $this->assertFileExists($controller = $this->tmp('services/users/app/Http/Controllers/UserController.php'));
         $this->assertFileNotExists($this->tmp('services/users/app/Jobs/ProcessPodcastJob.php'));
+//        $this->assertFileDoesNotExist($this->tmp('services/users/app/Jobs/ProcessPodcastJob.php')); // PhpUnit 10
 
         $this->assertNamespace($model, 'Services\\Users');
         $this->assertNamespace($controller, 'Services\\Users\\Http\\Controllers');
