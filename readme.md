@@ -2,7 +2,7 @@
 # Laravel Modules
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/makeabledk/laravel-modules.svg?style=flat-square)](https://packagist.org/packages/makeabledk/laravel-modules)
-[![Build Status](https://img.shields.io/travis/makeabledk/laravel-modules/master.svg?style=flat-square)](https://travis-ci.org/makeabledk/laravel-modules)
+[![Build Status](https://img.shields.io/github/workflow/status/makeabledk/laravel-modules/Run%20tests?label=Tests)](https://github.com/makeabledk/laravel-modules/actions)
 [![StyleCI](https://styleci.io/repos/219764183/shield?branch=master)](https://styleci.io/repos/219764183)
 
 
