@@ -154,8 +154,8 @@ class Stub
     }
 
     /**
-     * @param string $path
-     * @param string $contents
+     * @param  string  $path
+     * @param  string  $contents
      * @param  bool  $lint
      * @return void
      */
