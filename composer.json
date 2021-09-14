@@ -15,8 +15,7 @@
         "php": ">=7.3.0",
         "illuminate/console": "6.*|7.*|8.*",
         "illuminate/container": "6.*|7.*|8.*",
-        "illuminate/support": "6.*|7.*|8.*",
-        "friendsofphp/php-cs-fixer": "^2.14"
+        "illuminate/support": "6.*|7.*|8.*"
     },
     "require-dev": {
         "laravel/laravel": "6.*|7.*|8.*",

@@ -66,7 +66,7 @@ class CreateModuleTest extends TestCase
         Artisan::call('modules:site api --no-update');
 
         $this->assertFileExists($module->getModulePath('app/ApiServiceProvider.php'));
-        $this->assertFileNotExists($module->getModulePath('resources'));
+        $this->assertFileDoesNotExist($module->getModulePath('resources'));
 //        $this->assertFileDoesNotExist($module->getModulePath('resources')); // PhpUnit 10
     }
 
