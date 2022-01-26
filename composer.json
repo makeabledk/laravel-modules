@@ -13,12 +13,12 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/console": "8.*|9.*",
-        "illuminate/container": "8.*|9.*",
-        "illuminate/support": "8.*|9.*"
+        "illuminate/console": "^8.80|9.*",
+        "illuminate/container": "^8.80|9.*",
+        "illuminate/support": "^8.80|9.*"
     },
     "require-dev": {
-        "laravel/laravel": "8.*|9.*",
+        "laravel/laravel": "^8.80|9.*",
         "mockery/mockery": "^1.4",
         "phpunit/phpunit": "9.*",
         "codedungeon/phpunit-result-printer": "^0.31.0"
