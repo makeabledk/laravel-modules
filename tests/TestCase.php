@@ -4,7 +4,6 @@ namespace Makeable\LaravelModules\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\DB;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModulesServiceProvider;
 use Makeable\LaravelModules\Stub;
