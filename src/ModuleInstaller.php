@@ -77,7 +77,7 @@ class ModuleInstaller
      * Write object to composer.json.
      * Append empty line as per PSR spec.
      *
-     * @param $key
+     * @param  $key
      * @param  array  $contents
      */
     public function write($key, $contents = null)

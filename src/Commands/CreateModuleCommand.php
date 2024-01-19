@@ -9,25 +9,10 @@ class CreateModuleCommand extends Command
 {
     use SuggestsComposerUpdate;
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'modules:make {name} {--assets} {--routes} {--no-update}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Create a new custom module in the format {type}/{name}';
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         $parts = explode('/', $this->argument('name'));
