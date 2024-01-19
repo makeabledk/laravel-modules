@@ -71,8 +71,8 @@ class MoveResourcesTest extends TestCase
     }
 
     /**
-     * @param $file
-     * @param $namespace
+     * @param  $file
+     * @param  $namespace
      */
     protected function assertNamespace($file, $namespace)
     {

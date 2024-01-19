@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "laravel/laravel": "10.*|11.*",
-        "mockery/mockery": "^1.4",
+        "mockery/mockery": "^1.5",
         "phpunit/phpunit": "^9.5",
         "codedungeon/phpunit-result-printer": "^0.31.0"
     },

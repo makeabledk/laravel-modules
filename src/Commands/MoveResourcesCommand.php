@@ -13,18 +13,8 @@ class MoveResourcesCommand extends Command
 {
     use SuggestsComposerUpdate;
 
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'modules:move {resources*} {--site=} {--service=} {--app-path=} {--force} {--no-update}';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Move resources to a module';
 
     /**
@@ -32,11 +22,6 @@ class MoveResourcesCommand extends Command
      */
     protected $module;
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         $files = collect($this->discoverFiles())->mapWithKeys(function (SplFileInfo $file) {
@@ -148,8 +133,8 @@ class MoveResourcesCommand extends Command
     }
 
     /**
-     * @param $oldPath
-     * @param $newPath
+     * @param  $oldPath
+     * @param  $newPath
      */
     protected function move($oldPath, $newPath)
     {
@@ -163,7 +148,7 @@ class MoveResourcesCommand extends Command
     }
 
     /**
-     * @param $path
+     * @param  $path
      */
     protected function updateNamespace($path)
     {
