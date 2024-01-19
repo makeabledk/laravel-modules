@@ -2,7 +2,6 @@
 
 namespace Makeable\LaravelModules\Commands;
 
-use Illuminate\Console\Command;
 use Makeable\LaravelModules\Module;
 
 class CreateServiceCommand extends CreateModuleCommand
