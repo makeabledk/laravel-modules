@@ -50,8 +50,8 @@ class Module
     }
 
     /**
-     * @param $groupName
-     * @param $name
+     * @param  $groupName
+     * @param  $name
      * @return static
      */
     public static function make($groupName, $name)
@@ -60,7 +60,7 @@ class Module
     }
 
     /**
-     * @param $name
+     * @param  $name
      * @return static
      */
     public static function service($name)
@@ -69,7 +69,7 @@ class Module
     }
 
     /**
-     * @param $name
+     * @param  $name
      * @return static
      */
     public static function site($name)

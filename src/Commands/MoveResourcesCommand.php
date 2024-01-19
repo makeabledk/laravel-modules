@@ -148,8 +148,8 @@ class MoveResourcesCommand extends Command
     }
 
     /**
-     * @param $oldPath
-     * @param $newPath
+     * @param  $oldPath
+     * @param  $newPath
      */
     protected function move($oldPath, $newPath)
     {
@@ -163,7 +163,7 @@ class MoveResourcesCommand extends Command
     }
 
     /**
-     * @param $path
+     * @param  $path
      */
     protected function updateNamespace($path)
     {
