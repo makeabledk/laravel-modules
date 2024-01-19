@@ -130,7 +130,7 @@ class Stub
     }
 
     /**
-     * @param $path
+     * @param  $path
      */
     protected function folder($path)
     {
@@ -138,7 +138,7 @@ class Stub
     }
 
     /**
-     * @param $name
+     * @param  $name
      * @param  array  $data
      * @return false|string
      */
