@@ -5,20 +5,19 @@ namespace Makeable\LaravelModules\Tests\Feature;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModuleInstaller;
 use Makeable\LaravelModules\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class MoveResourcesTest extends TestCase
 {
-    /** @test * */
+    #[Test]
     public function it_requires_a_given_module()
     {
-        tap($this)
-            ->expectException(HttpException::class)
-            ->prepareApp()
-            ->artisan('modules:move User --force --app-path='.$this->tmp('app'));
+        $this->expectException(HttpException::class);
+        $this->prepareApp()->artisan('modules:move User --force --app-path='.$this->tmp('app'));
     }
 
-    /** @test * */
+    #[Test]
     public function it_can_move_files_to_a_new_module()
     {
         $installer = ModuleInstaller::fake();
@@ -37,7 +36,7 @@ class MoveResourcesTest extends TestCase
         $this->assertFalse($installer->updatedComposer);
     }
 
-    /** @test * */
+    #[Test]
     public function it_can_move_files_to_existing_modules()
     {
         ModuleInstaller::fake();
@@ -47,7 +46,7 @@ class MoveResourcesTest extends TestCase
         $this->assertFileExists($this->tmp('services/users/app/User.php'));
     }
 
-    /** @test * */
+    #[Test]
     public function it_suggests_to_update_composer_after_module_was_created()
     {
         $installer = ModuleInstaller::fake();
