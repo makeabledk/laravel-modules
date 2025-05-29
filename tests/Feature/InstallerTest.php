@@ -6,10 +6,11 @@ use Illuminate\Support\Arr;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModuleInstaller;
 use Makeable\LaravelModules\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class InstallerTest extends TestCase
 {
-    /** @test * */
+    #[Test]
     public function it_does_not_change_the_formatting()
     {
         $installer = ModuleInstaller::fake();
@@ -19,7 +20,7 @@ class InstallerTest extends TestCase
         $this->assertEquals($originalContents, file_get_contents($installer->path()));
     }
 
-    /** @test * */
+    #[Test]
     public function it_can_write_to_a_specific_key()
     {
         $installer = ModuleInstaller::fake();
@@ -29,7 +30,7 @@ class InstallerTest extends TestCase
         $this->assertEquals($properties + 1, count($installer->read()));
     }
 
-    /** @test * */
+    #[Test]
     public function it_adds_a_repositories_config()
     {
         $installer = ModuleInstaller::fake()->install(new Module('sites', 'web'));
@@ -42,7 +43,7 @@ class InstallerTest extends TestCase
         ]);
     }
 
-    /** @test * */
+    #[Test]
     public function it_appends_a_repository_to_an_existing_numeric_repositories_config()
     {
         $installer = ModuleInstaller::fake();
@@ -59,7 +60,7 @@ class InstallerTest extends TestCase
         $this->assertEquals(2, count($installer->read('repositories')));
     }
 
-    /** @test * */
+    #[Test]
     public function it_sorts_repositories_alphabetically()
     {
         $installer = ModuleInstaller::fake();
@@ -71,7 +72,7 @@ class InstallerTest extends TestCase
         $this->assertEquals('./sites/web', $installer->read('repositories.1.url'));
     }
 
-    /** @test * */
+    #[Test]
     public function it_appends_a_repository_to_an_existing_associative_repositories_config()
     {
         $installer = ModuleInstaller::fake();

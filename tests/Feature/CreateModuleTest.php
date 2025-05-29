@@ -6,10 +6,11 @@ use Illuminate\Support\Facades\Artisan;
 use Makeable\LaravelModules\Module;
 use Makeable\LaravelModules\ModuleInstaller;
 use Makeable\LaravelModules\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class CreateModuleTest extends TestCase
 {
-    /** @test * */
+    #[Test]
     public function it_can_create_a_module_through_module_class()
     {
         $installer = ModuleInstaller::fake();
@@ -25,7 +26,7 @@ class CreateModuleTest extends TestCase
         $this->assertNotNull($installer->read("require.{$module->getPackageName()}"));
     }
 
-    /** @test * */
+    #[Test]
     public function it_can_create_a_module_through_the_artisan_command()
     {
         $installer = ModuleInstaller::fake();
@@ -39,7 +40,7 @@ class CreateModuleTest extends TestCase
         $this->assertFalse($installer->updatedComposer);
     }
 
-    /** @test * */
+    #[Test]
     public function it_can_create_a_site_through_the_artisan_command()
     {
         $installer = ModuleInstaller::fake();
@@ -57,7 +58,7 @@ class CreateModuleTest extends TestCase
         $this->assertFalse($installer->updatedComposer);
     }
 
-    /** @test * */
+    #[Test]
     public function it_does_not_create_assets_when_making_a_site_called_api()
     {
         ModuleInstaller::fake();
@@ -70,7 +71,7 @@ class CreateModuleTest extends TestCase
 //        $this->assertFileDoesNotExist($module->getModulePath('resources')); // PhpUnit 10
     }
 
-    /** @test * */
+    #[Test]
     public function it_can_create_a_service_through_the_artisan_command()
     {
         $installer = ModuleInstaller::fake();
@@ -84,7 +85,7 @@ class CreateModuleTest extends TestCase
         $this->assertFalse($installer->updatedComposer);
     }
 
-    /** @test * */
+    #[Test]
     public function it_suggests_to_update_composer_after_running_artisan_command()
     {
         $installer = ModuleInstaller::fake();
